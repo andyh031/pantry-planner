@@ -1,6 +1,7 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ***REMOVED***erverApi
 import json
+import requests
 
 from flask import Flask, render_template, request, url_for, redirect
 from flask_cors import COR***REMOVED***
@@ -16,7 +17,6 @@ db = client.sample_mflix
 
 data = db.movies.find().limit(3)
 
-
 @app.route('/<name>', methods=['GET'])
 def hello_world(name):
     return f'<h1>Hello, {name}! :D<h1>'
@@ -26,6 +26,14 @@ def hello_world(name):
 def list_projects():
     return "hello"
 
+@app.route("/", methods=["GET"])
+def get_item(item):
+    api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(item)
+    response = requests.get(api_url, headers={'X-Api-Key': API_KEY})
+    if response.status_code == requests.codes.ok:
+        print(response.text)
+    else:
+        print("Error:", response.status_code, response.text)
 
 @app.route('/movie/', methods=['PO***REMOVED***T'])
 def post_project():
@@ -33,3 +41,6 @@ def post_project():
     db.movies.insert_one(post_data)
     return "done"
 
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
