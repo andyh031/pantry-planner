@@ -8,7 +8,6 @@ from flask_cors import COR***REMOVED***
 app = Flask(__name__)
 COR***REMOVED***(app)
 
-uri = "mongodb+srv://Bubble***REMOVED***ort:Bubble***REMOVED***ortAwesome@testcluster.wdw9274.mongodb.net/?retryWrites=true&w=majority"
 
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=***REMOVED***erverApi('1'))
