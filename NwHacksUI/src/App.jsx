@@ -4,7 +4,7 @@ import './App.css'
 
 import Home from './components/Home'
 import LoginPage from './components/LoginPage'
-import PrivateRoute from './auth/PrivateRoute'
+import PrivateRoute from './auth/PrivateRoute.jsx'
 
 function App() {
 
