@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react';
+import { UserContextProvider } from './auth/UserContext';
 import './App.css'
 
 import Home from './components/Home'
