@@ -6,6 +6,6 @@ export const userApi = {
 
 function createUser(user) {
   const url ='/user';
-  return instance.post(url, user)
-  .catch((error) => console.log(error));
+  return instance.post(url, user);
 }
+
