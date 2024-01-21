@@ -114,12 +114,9 @@ def get_five_ingredients(query):
         print("didn't work")
 
 
-@app.route('/', methods=['GET'])
-def get_ingredient(query):
-    ingredients = get_five_ingredients(query)
-    for ingredient in ingredients:
-        ingredient['_id'] = str(ingredient['_id'])
-        ingredient['user_id'] = str(ingredient['user_id'])
+@app.route('/ingredient/info/<ingredient>', methods=['GET'])
+def get_ingredient(ingredient):
+    ingredients = get_five_ingredients(ingredient)
     return jsonify(ingredients)
 
 
