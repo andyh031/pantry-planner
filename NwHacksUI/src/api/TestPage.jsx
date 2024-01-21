@@ -4,8 +4,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function TestPage() {
   const { user, isAuthenticated, isLoading } = useAuth0();
+  
+
+
     if (isLoading) {
-      // ***REMOVED***how loading indicator or placeholder content while authentication is in progress
+      // Show loading indicator or placeholder content while authentication is in progress
       return <div>Loading...</div>;
     }
   

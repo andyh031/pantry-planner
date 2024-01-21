@@ -1,22 +1,22 @@
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ***REMOVED***erverApi
+from pymongo.server_api import ServerApi
 from bson import ObjectId
 import json
 import requests
 import os
 
 from flask import Flask, render_template, request, url_for, redirect, Response, jsonify
-from flask_cors import COR***REMOVED***
+from flask_cors import CORS
 app = Flask(__name__)
-COR***REMOVED***(app)
+CORS(app)
 
 load_dotenv()
 
 uri = os.environ['MONGO_URI']
 
 # Create a new client and connect to the server
-client = MongoClient(uri, server_api=***REMOVED***erverApi('1'))
+client = MongoClient(uri, server_api=ServerApi('1'))
 
 db = client.nwHacks2024
 
@@ -38,19 +38,19 @@ def get_item(item):
     else:
         print("Error:", response.status_code, response.text)
 
-# @app.route('/movie', methods=['PO***REMOVED***T'])
+# @app.route('/movie', methods=['POST'])
 # def post_project():
 #     post_data = json.loads(request.data)
 #     db.movies.insert_one(post_data)
 #     return
 
 
-def getUserIdFromUser***REMOVED***ub(sub):
+def getUserIdFromUserSub(sub):
     user_obj_id = db.user.find_one({"sub": sub})
     return user_obj_id['_id']
 
 
-@app.route('/user', methods=['PO***REMOVED***T'])
+@app.route('/user', methods=['POST'])
 def create_user():
     user = json.loads(request.data)
     user_id = user["sub"]
@@ -66,7 +66,7 @@ def create_user():
 
 @app.route('/ingredient', methods=['GET'])
 def get_ingredients():
-    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    user_id = getUserIdFromUserSub(request.args.get('user_id'))
 
     ingredients = list(db.ingredient.find({"user_id": user_id}))
     for ingredient in ingredients:
@@ -76,9 +76,9 @@ def get_ingredients():
     return jsonify(ingredients)
 
 
-@app.route('/recipe', methods=['PO***REMOVED***T'])
+@app.route('/recipe', methods=['POST'])
 def create_recipe():
-    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    user_id = getUserIdFromUserSub(request.args.get('user_id'))
     recipe = request.data
     recipe = json.loads(recipe)
     recipe["user_id"] = user_id
@@ -86,9 +86,9 @@ def create_recipe():
     return Response(status=200)
 
 
-@app.route("/ingredient", methods=['PO***REMOVED***T'])
+@app.route("/ingredient", methods=['POST'])
 def add_ingredient():
-    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    user_id = getUserIdFromUserSub(request.args.get('user_id'))
     ingredient = json.loads(request.data)
     existing_user = db.user.find({"sub": user_id})
     if existing_user is None:
@@ -128,7 +128,7 @@ def get_ingredient(ingredient):
 
 
 # returns a list of recipes that contains only the given ingredients
-@app.route("/recipe/contains-ingredients", methods=['PO***REMOVED***T'])
+@app.route("/recipe/contains-ingredients", methods=['POST'])
 def findRecipesGivenIngredient():
     ingredients = json.loads(request.data)
     query = {

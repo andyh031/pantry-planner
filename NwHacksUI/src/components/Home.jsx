@@ -1,5 +1,5 @@
-import { Box, Grid, GridItem, Text, Button, Flex, V***REMOVED***tack } from "@chakra-ui/react"
-import ***REMOVED***idebar from "./***REMOVED***idebar"
+import { Box, Grid, GridItem, Text, Button, Flex, VStack } from "@chakra-ui/react"
+import Sidebar from "./Sidebar"
 import Main from "./Main"
 import RightPanel from "./RightPanel"
 import bgImage from './food_background_banner.png'
@@ -20,10 +20,10 @@ function Home() {
 
   return (
     !isAuthenticated ? (
-      <Box h='100vh' backgroundColor='#F4F4F4' backgroundImage={bgImage} backgroundRepeat='repeat-x' background***REMOVED***ize='1547px 300px' backgroundPosition='initial'>
+      <Box h='100vh' backgroundColor='#F4F4F4' backgroundImage={bgImage} backgroundRepeat='repeat-x' backgroundSize='1547px 300px' backgroundPosition='initial'>
         <Grid gridGap='3rem' templateColumns='0.8fr 2fr 1fr' p='2rem'>
           <GridItem>
-            <***REMOVED***idebar/>
+            <Sidebar/>
           </GridItem>
           <GridItem>
             <Main/>
@@ -35,10 +35,10 @@ function Home() {
       </Box>
     ) : (
       <Flex w="100vw" h="100vh" justifyContent='center' alignItems='center'>
-        <V***REMOVED***tack>
+        <VStack>
           <Text>You need an account to login!</Text>
           <LoginButton/>
-        </V***REMOVED***tack>
+        </VStack>
       </Flex>
     )
   );
