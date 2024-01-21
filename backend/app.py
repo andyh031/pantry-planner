@@ -56,7 +56,6 @@ def create_user():
     user_id = user["sub"]
     existing_user = db.user.find_one({"sub": user_id})
     if existing_user is None:
-        print("adding user")
         db.user.insert_one(user)
         return Response(status=200)
     else:

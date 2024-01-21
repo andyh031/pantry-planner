@@ -7,7 +7,8 @@ export const ingredientsApi = {
 }
 
 function getIngredients(user) {
-  const url =`/ingredients/user_id?${user.sub}`;
+  // const url =`/ingredient?user_id=${user.sub}`;
+  const url =`/ingredient?user_id=google-oauth2|114710454896359065665`;
   return instance.get(url);
 }
 
