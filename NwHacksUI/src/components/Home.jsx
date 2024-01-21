@@ -1,14 +1,10 @@
-import { Box, Grid, GridItem, Text, Flex, Image } from "@chakra-ui/react"
+import { Box, Grid, GridItem, Flex, Image } from "@chakra-ui/react"
 import Sidebar from "./Sidebar"
 import Main from "./Main"
 import RightPanel from "./RightPanel"
 import bgImage from './food_background_banner.png'
 import { useAuth0 } from "@auth0/auth0-react";
-import LoginPage from "./LoginPage"
 import { useState } from "react"
-import { useEffect } from "react"
-import { userApi } from "../api/UserApi";
-import { ingredientsApi } from "../api/IngredientApi"
 import logo from './logo.png'
 
 function Home() {

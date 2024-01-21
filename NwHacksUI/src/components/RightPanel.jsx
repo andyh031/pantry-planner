@@ -1,4 +1,4 @@
-import { Box, Text, Flex, HStack, Avatar, Input, List, ListItem, CloseButton, Button} from "@chakra-ui/react"
+import { Box, Text, Flex, HStack, Avatar, Input, List, ListItem, Button} from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { userApi } from "../api/UserApi"
 import { CloseIcon } from "@chakra-ui/icons"

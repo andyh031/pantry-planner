@@ -1,5 +1,5 @@
-import { AddIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons"
-import { Box, HStack, Input, Button, Select, Text, Flex, Grid, VStack, List, ListItem, InputRightElement, InputGroup, Accordion,
+import { AddIcon,Search2Icon } from "@chakra-ui/icons"
+import { Box, HStack, Input, Button, Text, Grid, ListItem, InputRightElement, InputGroup, Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
@@ -8,7 +8,6 @@ import { Box, HStack, Input, Button, Select, Text, Flex, Grid, VStack, List, Lis
   OrderedList} from "@chakra-ui/react"
 import { useState } from "react";
 import { recipeApi } from "../api/RecipeApi";
-import { addItem } from "@chakra-ui/utils";
 
 function Main({user, recipes, setRecipes, setEatenMeals, setTotalCalories}) {
 
