@@ -11,7 +11,7 @@ from flask_cors import COR***REMOVED***
 app = Flask(__name__)
 COR***REMOVED***(app)
 
-
+load_dotenv()
 
 uri = os.environ['MONGO_URI']
 
@@ -70,7 +70,6 @@ def create_user():
 @app.route('/ingredient', methods=['GET'])
 def get_ingredients():
     user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
-    print(user_id)
 
     ingredients = list(db.ingredient.find({"user_id": user_id}))
     for ingredient in ingredients:
@@ -82,6 +81,7 @@ def get_ingredients():
 
 @app.route('/recipe', methods=['PO***REMOVED***T'])
 def create_recipe():
+    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
     recipe = json.loads(request.data)
     db.insert_one()
 
