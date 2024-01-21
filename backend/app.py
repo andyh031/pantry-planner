@@ -59,7 +59,7 @@ def getUserIdFromUser***REMOVED***ub(sub):
 def create_user():
     user = json.loads(request.data)
     user_id = user["sub"]
-    existing_user = db.user.find({"sub": user_id})
+    existing_user = db.user.find_one({"sub": user_id})
     if existing_user is None:
         return Response(status=404)
     else:
