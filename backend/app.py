@@ -1,7 +1,9 @@
+from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ***REMOVED***erverApi
 import json
 import requests
+import os
 
 from flask import Flask, render_template, request, url_for, redirect
 from flask_cors import COR***REMOVED***
@@ -28,7 +30,7 @@ def list_projects():
 @app.route("/", methods=["GET"])
 def get_item(item):
     api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(item)
-    response = requests.get(api_url, headers={'X-Api-Key': API_KEY})
+    response = requests.get(api_url, headers={'X-Api-Key': os.environ['API_KEY']})
     if response.status_code == requests.codes.ok:
         print(response.text)
     else:
