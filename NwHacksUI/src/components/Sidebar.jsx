@@ -2,14 +2,13 @@ import { Image, Box, Button, Text, List, Checkbox, ListItem, Flex, useDisclosure
 import { AddIcon, CloseIcon } from '@chakra-ui/icons'
 import React, { useState } from 'react'
 import logoImage from './logo.png'
-import { ingredientsApi } from '../api/IngredientApi'
 
 function Sidebar() {
 
     const [items, setItems] = useState([{ingredientName: 'Banana', expiryDate: '2024-08-08'}])
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [newAddition, setNewAddition] = useState('Ingredient')
-    const [checkedItems, setCheckedItems] = useState([]);
+    const [checkedItems, setCheckedItems] = useState([])
 
     // for ingredient addition
     const [ingredientName, setIngredientName] = useState("");
@@ -23,10 +22,6 @@ function Sidebar() {
     const [description, setDescription] = useState("");
     const [steps, setSteps] = useState([])
     const [ingredients, setIngredients] = useState([]);
-
-    const generateRecipes = () => {
-
-    }
 
     const deleteItem = (name) => {
         console.log(name);
@@ -73,8 +68,6 @@ function Sidebar() {
             setItems((prevItems) => {
                 return [...prevItems, {ingredientName, expiryDate}]
             })
-
-            // ingredientsApi.addIngredient(user, object);
             
         } else {
             object = {
@@ -100,6 +93,7 @@ function Sidebar() {
                 return [...prevItems, item];
             }
         })
+        console.log(checkedItems);
     }
 
     return (
@@ -252,7 +246,7 @@ function Sidebar() {
                 </List>
             </Box>
         </Box>
-        <Button onClick={generateRecipes}m='3rem' transform='translate(0, -150px)'>
+        <Button m='3rem' transform='translate(0, -150px)'>
             Generate Recipes
         </Button>
         </>

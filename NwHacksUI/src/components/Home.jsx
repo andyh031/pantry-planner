@@ -6,11 +6,18 @@ import bgImage from './food_background_banner.png'
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginPage from "./LoginPage"
 import { useState } from "react"
+import { useEffect } from "react"
 import { userApi } from "../api/UserApi";
 
 function Home() {
 
   const { user, isAuthenticated, isLoading } = useAuth0();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      userApi.createUser(user);
+    }
+  }, [isAuthenticated]);
 
   return (
     !isAuthenticated ? (
