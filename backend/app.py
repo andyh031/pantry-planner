@@ -1,16 +1,16 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ***REMOVED***erverApi
+from bson import ObjectId
 import json
 import requests
 import os
 
-from flask import Flask, render_template, request, url_for, redirect, Response
+from flask import Flask, render_template, request, url_for, redirect, Response, jsonify
 from flask_cors import COR***REMOVED***
 app = Flask(__name__)
 COR***REMOVED***(app)
 
 uri = os.environ['MONGO_URI']
-
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=***REMOVED***erverApi('1'))
 
@@ -30,14 +30,14 @@ def hello_world(name):
 def list_projects():
     return "hello"
 
-# @app.route("/", methods=["GET"])
-# def get_item(item):
-#     api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(item)
-#     response = requests.get(api_url, headers={'X-Api-Key': API_KEY})
-#     if response.status_code == requests.codes.ok:
-#         print(response.text)
-#     else:
-#         print("Error:", response.status_code, response.text)
+@app.route("/", methods=["GET"])
+def get_item(item):
+    api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(item)
+    response = requests.get(api_url, headers={'X-Api-Key': os.environ['API_KEY']})
+    if response.status_code == requests.codes.ok:
+        print(response.text)
+    else:
+        print("Error:", response.status_code, response.text)
 
 # @app.route('/movie', methods=['PO***REMOVED***T'])
 # def post_project():
@@ -58,6 +58,19 @@ def create_user():
         db.user.insert_one(user)
         return Response(status=200)
 
-# if __name__ == "__main__":
-#     app.debug = True
-#     app.run()
+
+@app.route('/ingredient', methods=['GET'])
+def get_ingredients():
+    ingredients = list(db.ingredient.find())
+    for ingredient in ingredients:
+        ingredient['_id'] = str(ingredient['_id'])
+        ingredient['user_id'] = str(ingredient['user_id'])
+
+    return jsonify(ingredients)
+
+
+
+
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
