@@ -42,7 +42,7 @@ function Sidebar({user, checkedItems, setCheckedItems, recipes, setRecipes}) {
 
     const addIngredientToRecipe = () => {
         setIngredients((prevIngredients) => {
-            return [...prevIngredients, curIngredient];
+            return [...prevIngredients, curIngredient]
         })
         setCurIngredient("");
     }

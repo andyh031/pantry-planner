@@ -6,7 +6,7 @@ import { Box, HStack, Input, Button, Text, Grid, ListItem, InputRightElement, In
   AccordionIcon, 
   UnorderedList,
   OrderedList} from "@chakra-ui/react"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { recipeApi } from "../api/RecipeApi";
 
 function Main({user, recipes, setRecipes, setEatenMeals, setTotalCalories}) {
