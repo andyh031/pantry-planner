@@ -1,4 +1,4 @@
-import { Box, Text, Flex, H***REMOVED***tack, Avatar, Input, List, ListItem, CloseButton} from "@chakra-ui/react"
+import { Box, Text, Flex, H***REMOVED***tack, Avatar, Input, List, ListItem, CloseButton, Button} from "@chakra-ui/react"
 import { use***REMOVED***tate } from "react"
 
 
@@ -12,6 +12,10 @@ function RightPanel() {
 
     const [calorieLimit, setCalorieLimit] = use***REMOVED***tate(1200);
     const [eatenMeals, setEatenMeals] = use***REMOVED***tate(['thing1', 'thing2', 'thing3'])
+
+    const signOut = () => {
+        console.log("***REMOVED***igning Out");
+    }
     
     return (
         <>
@@ -20,7 +24,7 @@ function RightPanel() {
                 <Avatar marginBlock='auto' marginInline='2rem' size='md' name='Ben Dover' bg='teal.200'/>
                 <Box>
                     <Text>{name}</Text>
-                    <Text>***REMOVED***ign out</Text>
+                    <Button onClick={signOut}>***REMOVED***ign out</Button>
                 </Box>
             </H***REMOVED***tack>
             <Box borderBottom = '2px solid #B7D0B0'></Box>

@@ -23,16 +23,9 @@ function Main() {
                 <InputGroup>
                     <Input backgroundColor='#EEF4F6' value={input} onChange={(e) => handleInputChange(e)}borderRadius='2rem' size='lg' placeholder='***REMOVED***earch Recipe...'></Input>
                     <InputRightElement>
-                        <***REMOVED***earch2Icon color***REMOVED***cheme='blue'/>
+                            <***REMOVED***earch2Icon color***REMOVED***cheme='blue'/>
                     </InputRightElement>
                 </InputGroup>
-                <Button color***REMOVED***cheme='green' borderRadius='2rem' transform='translate(-60px, 0px)'>
-                    <***REMOVED***earch2Icon/>
-                </Button>
-                <***REMOVED***elect borderRadius='1rem' variant='filled' w='35%'>
-                    <option value='Unique'>Unique</option>
-                    <option value='Not Unique'>Not Unique</option>
-                </***REMOVED***elect>
             </H***REMOVED***tack>
             <Box mt='5rem'>
                 <Text font***REMOVED***ize='36px'>***REMOVED***howing <strong>{recipes.length}</strong> Results</Text>
