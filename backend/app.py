@@ -102,6 +102,22 @@ def add_ingredient():
         db.ingredient.insert_one(ingredient)
         return Response(status=200)
 
+@app.route("/recipe", methods=['PO***REMOVED***T'])
+def get_recipes():
+    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    recipes = list(db.recipe.find({'user_id': user_id}))
+    if recipes is None:
+        recipes = list(db.recipe.find())
+        for recipe in recipes:
+            recipe['_id'] = str(recipe['_id'])
+            recipe['user_id'] = str(recipe['user_id'])
+    else:
+        for recipe in recipes:
+            recipe['_id'] = str(recipe['_id'])
+            recipe['user_id'] = str(recipe['user_id'])
+    return jsonify(recipes)
+    
+
 
 def get_five_ingredients(query):
     api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(query)
