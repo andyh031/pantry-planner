@@ -54,6 +54,7 @@ def getUserIdFromUser***REMOVED***ub(sub):
     user_obj_id = db.user.find_one({"sub": sub})
     return user_obj_id['_id']
 
+
 @app.route('/user', methods=['PO***REMOVED***T'])
 def create_user():
     user = json.loads(request.data)
@@ -87,6 +88,19 @@ def create_recipe():
     recipe["user_id"] = user_id
     db.recipe.insert_one(recipe)
     return Response(status=200)
+
+
+@app.route("/ingredient", methods=['PO***REMOVED***T'])
+def add_ingredient():
+    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    ingredient = json.loads(request.data)
+    existing_user = db.user.find({"sub": user_id})
+    if existing_user is None:
+        return Response(status=404)
+    else:
+        ingredient["user_id"] = user_id
+        db.ingredient.insert_one(ingredient)
+        return Response(status=200)
 
 
 
