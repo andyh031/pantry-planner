@@ -16,7 +16,7 @@ function App() {
       <ChakraProvider>
         <Routes>
           <Route path='/login' element={<LoginPage />}/>
-          <Route path='/' element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path='/' element={<Home />} />
           <Route path="*" element={<Navigate to="/" />}/>
           <Route path='/test' element={<TestPage />}/>
         </Routes>
