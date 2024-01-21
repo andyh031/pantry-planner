@@ -4,30 +4,32 @@ import React, { use***REMOVED***tate } from 'react'
 
 function ***REMOVED***idebar() {
 
-    const items = [{name: 'Cheese', date: 'Jan 30'}, {name: 'Apple', date: 'Jan 24'}]
+    const [items, setItems] = use***REMOVED***tate([{name: 'Cheese', date: 'Jan 30'}, {name: 'Apple', date: 'Jan 24'}])
 
     return (
         <>
-        <Box>
+        <Box h='100vh'>
             <Flex mb='2rem' justifyContent='center'>
                 <Image borderRadius='100%' objectFit='cover' src='https://bit.ly/dan-abramov' box***REMOVED***ize='150px'/>
             </Flex>
-            <Box borderRadius='2rem' h='70vh' p='2rem' backgroundColor='white'>
+            <Box borderTopRadius='2rem' p='2rem' backgroundColor='white'>
                 <Flex justifyContent='space-between'>
                     <Box>
                         <Text font***REMOVED***ize='30px' fontWeight='bold'>My Pantry</Text>
-                        <Text font***REMOVED***ize='12px'>You have {items.length} ingredients</Text>
+                        <Text font***REMOVED***ize='12px'>INGREDIENT***REMOVED***: {items.length}</Text>
                     </Box>
-                    <Button objectFit='cover' size='md' borderRadius='100%' color***REMOVED***cheme='green' transform='translate(0, 55px)' marginRight='20px'>
+                    <Button width='fit-content' marginBlock='auto' objectFit='cover' size='md' borderRadius='100%' color***REMOVED***cheme='green'>
                         <AddIcon/>
                     </Button>
                 </Flex>
-                <Box marginBlock='1rem' borderBottom = '2px solid green'></Box>
+            </Box>
+            <Box borderBottom = '2px solid #B7D0B0'></Box>
+            <Box borderBottomRadius='2rem' h='50vh' p='2rem' backgroundColor='white'>
                 <List>
                     {items.map((item) => {
                         return (
                             <ListItem key={item.name}>
-                                <Checkbox color***REMOVED***cheme='green'>
+                                <Checkbox size='lg' borderColor='#B7D0B0' color***REMOVED***cheme='green'>
                                     <Text font***REMOVED***ize='15px'>{item.name}</Text>
                                     <Text font***REMOVED***ize='12px'>Expires {item.date}</Text>
                                 </Checkbox>

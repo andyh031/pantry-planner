@@ -1,14 +1,25 @@
 import { ***REMOVED***earch2Icon } from "@chakra-ui/icons"
-import { Box, H***REMOVED***tack, Input, Button, ***REMOVED***elect, Text, V***REMOVED***tack, List, ListItem } from "@chakra-ui/react"
+import { Box, H***REMOVED***tack, Input, Button, ***REMOVED***elect, Text, Flex, V***REMOVED***tack, List, ListItem, InputRightElement, InputGroup } from "@chakra-ui/react"
+import { use***REMOVED***tate } from "react";
 
 function Main() {
 
-    const recipes = ['recipe1', 'recipe2', 'recipe3', 'recipe4', 'recipe5']
+    const [recipes, setRecipes] = use***REMOVED***tate([{name: 'Recipe1', description: 'descriptionnnnnn', calories: '123'}, {name: 'Recipe1', description: 'descriptionnnnnn', calories: '123'}])
+    const [input, setInput] = use***REMOVED***tate("");
 
+    const handleInputChange = (e) => {
+        setInput(e.target.value)
+    }
+    
     return (
         <Box>
             <H***REMOVED***tack mb='1rem' p='1rem' paddingBlock='1rem' backgroundColor='white'>
-                <Input borderRadius='2rem' size='lg' placeholder='***REMOVED***earch Recipe...'></Input>
+                <InputGroup>
+                    <Input backgroundColor='#EEF4F6' value={input} onChange={(e) => handleInputChange(e)}borderRadius='2rem' size='lg' placeholder='***REMOVED***earch Recipe...'></Input>
+                    <InputRightElement>
+                        <***REMOVED***earch2Icon color***REMOVED***cheme='blue'/>
+                    </InputRightElement>
+                </InputGroup>
                 <Button color***REMOVED***cheme='green' borderRadius='2rem' transform='translate(-60px, 0px)'>
                     <***REMOVED***earch2Icon/>
                 </Button>
@@ -23,10 +34,14 @@ function Main() {
                 <List>
                     {recipes.map((recipe) => {
                         return (
-                            <ListItem p='1rem' key={recipe}>
-                                <Box backgroundColor='white' p='2rem' borderRadius='10px' borderLeft='15px solid #B7D0B0'>
-                                    {recipe}
-                                </Box>
+                            <ListItem  p='1rem' key={recipe.name}>
+                                <Flex backgroundColor='white' w='100%' justifyContent='space-between'>
+                                    <Box p='2rem' borderRadius='10px' borderLeft='15px solid #B7D0B0'>
+                                        <Text fontWeight='semibold' font***REMOVED***ize='22px'>{recipe.name}</Text>
+                                        <Text font***REMOVED***ize='15px'>{recipe.description}</Text>
+                                    </Box>
+                                    <Text font***REMOVED***ize='18px' fontWeight='semibold' mr='3rem' marginBlock='auto'>{recipe.calories} cal</Text>
+                                </Flex>
                             </ListItem>
                         )
                     })}
