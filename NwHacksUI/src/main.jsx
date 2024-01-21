@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     >
       <App />
     </Auth0Provider>
-  </React.***REMOVED***trictMode>,
+  </React.***REMOVED***trictMode>
 )

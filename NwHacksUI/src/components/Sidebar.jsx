@@ -23,8 +23,8 @@ function ***REMOVED***idebar() {
                     </Button>
                 </Flex>
             </Box>
-            <Box borderBottom = '2px solid #B7D0B0'></Box>
-            <Box borderBottomRadius='2rem' h='50vh' p='2rem' backgroundColor='white'>
+            <Box borderBottom = '2px solid #F4F4F4'></Box>
+            <Box h='100vh' p='2rem' backgroundColor='white'>
                 <List>
                     {items.map((item) => {
                         return (

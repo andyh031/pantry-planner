@@ -1,5 +1,11 @@
 import { ***REMOVED***earch2Icon } from "@chakra-ui/icons"
-import { Box, H***REMOVED***tack, Input, Button, ***REMOVED***elect, Text, Flex, V***REMOVED***tack, List, ListItem, InputRightElement, InputGroup } from "@chakra-ui/react"
+import { Box, H***REMOVED***tack, Input, Button, ***REMOVED***elect, Text, Flex, Grid, V***REMOVED***tack, List, ListItem, InputRightElement, InputGroup, Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon, 
+  UnorderedList,
+  OrderedList} from "@chakra-ui/react"
 import { use***REMOVED***tate } from "react";
 
 function Main() {
@@ -13,7 +19,7 @@ function Main() {
     
     return (
         <Box>
-            <H***REMOVED***tack mb='1rem' p='1rem' paddingBlock='1rem' backgroundColor='white'>
+            <H***REMOVED***tack marginBlock='2rem' mb='1rem' p='1rem' paddingBlock='1rem' backgroundColor='white'>
                 <InputGroup>
                     <Input backgroundColor='#EEF4F6' value={input} onChange={(e) => handleInputChange(e)}borderRadius='2rem' size='lg' placeholder='***REMOVED***earch Recipe...'></Input>
                     <InputRightElement>
@@ -28,24 +34,47 @@ function Main() {
                     <option value='Not Unique'>Not Unique</option>
                 </***REMOVED***elect>
             </H***REMOVED***tack>
-            <Box>
+            <Box mt='5rem'>
                 <Text font***REMOVED***ize='36px'>***REMOVED***howing <strong>{recipes.length}</strong> Results</Text>
                 <Text font***REMOVED***ize='14px'>We prioritized ingredients that are about to expire.</Text>
-                <List>
+                <Accordion paddingBlock='1rem' allowToggle>
                     {recipes.map((recipe) => {
                         return (
-                            <ListItem  p='1rem' key={recipe.name}>
-                                <Flex backgroundColor='white' w='100%' justifyContent='space-between'>
-                                    <Box p='2rem' borderRadius='10px' borderLeft='15px solid #B7D0B0'>
-                                        <Text fontWeight='semibold' font***REMOVED***ize='22px'>{recipe.name}</Text>
-                                        <Text font***REMOVED***ize='15px'>{recipe.description}</Text>
-                                    </Box>
-                                    <Text font***REMOVED***ize='18px' fontWeight='semibold' mr='3rem' marginBlock='auto'>{recipe.calories} cal</Text>
-                                </Flex>
-                            </ListItem>
+                            <AccordionItem key={recipe.name}>
+                                <AccordionButton >
+                                    <Grid textAlign='left' borderRadius='10px' backgroundColor='white' w='100%' templateColumns='5fr 1fr 1fr'>
+                                        <Box p='2rem' borderRadius='10px' borderLeft='15px solid #B7D0B0'>
+                                            <Text fontWeight='semibold' font***REMOVED***ize='22px'>{recipe.name}</Text>
+                                            <Text font***REMOVED***ize='15px'>{recipe.description}</Text>
+                                        </Box>
+                                        <Text font***REMOVED***ize='18px' fontWeight='semibold' marginBlock='auto'>{recipe.calories} cal</Text>
+                                        <AccordionIcon marginBlock='auto'/>
+                                    </Grid>
+                                </AccordionButton>
+                                <AccordionPanel borderRadius='10px' m='1rem' bgColor='#D8DED7'>
+                                    <Grid gridGap='1rem' templateColumns='1fr 1fr'>
+                                        <Box p='1rem' bgColor='#F4F4F4'>
+                                            <Text font***REMOVED***ize='18px'>Ingredients</Text>
+                                            <UnorderedList>
+                                                <ListItem font***REMOVED***ize='13px'>ingredient</ListItem>
+                                                <ListItem font***REMOVED***ize='13px'>ingredient</ListItem>
+                                                <ListItem font***REMOVED***ize='13px'>ingredient</ListItem>
+                                            </UnorderedList>
+                                        </Box>
+                                        <Box p='1rem' bgColor='#F4F4F4'>
+                                            <Text font***REMOVED***ize='18px'>***REMOVED***teps</Text>
+                                            <OrderedList>
+                                                <ListItem font***REMOVED***ize='13px'>IDK</ListItem>
+                                                <ListItem font***REMOVED***ize='13px'>IDK</ListItem>
+                                                <ListItem font***REMOVED***ize='13px'>IDK</ListItem>
+                                            </OrderedList>
+                                        </Box>
+                                    </Grid>
+                                </AccordionPanel>
+                            </AccordionItem>
                         )
                     })}
-                </List>
+                </Accordion>
             </Box>
         </Box>
     )
