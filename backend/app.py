@@ -126,21 +126,12 @@ def get_ingredient(query):
 # returns a list of recipes that contains only the given ingredients
 @app.route("/recipe/contains-ingredients", methods=['PO***REMOVED***T'])
 def findRecipesGivenIngredient():
-    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
-    print(user_id)
     ingredients = json.loads(request.data)
     query = {
-        "$and": [
-            {
                 'ingredients': {
                     '$all': ingredients,
                     '$size': len(ingredients)
                 }
-            },
-            {
-                'user_id': user_id
-            }
-        ]
     }
     recipes = list(db.recipe.find(query))
     for recipe in recipes:
