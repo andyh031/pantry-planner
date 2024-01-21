@@ -1,9 +1,10 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function PrivateRoute({ children }) {
-  // hardecoded, must implement later
-  const I***REMOVED***_U***REMOVED***ER_AUTHENTICATED = true;
-  return I***REMOVED***_U***REMOVED***ER_AUTHENTICATED ? children : <Navigate to="/login" />}
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  return isAuthenticated ? children : <Navigate to="/login" />}
 
 export default PrivateRoute;
