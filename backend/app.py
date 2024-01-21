@@ -11,7 +11,10 @@ from flask_cors import COR***REMOVED***
 app = Flask(__name__)
 COR***REMOVED***(app)
 
+
+
 uri = os.environ['MONGO_URI']
+
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=***REMOVED***erverApi('1'))
 
@@ -47,6 +50,10 @@ def get_item(item):
 #     return
 
 
+def getUserIdFromUser***REMOVED***ub(sub):
+    user_obj_id = db.user.find_one({"sub": sub})
+    return user_obj_id['_id']
+
 @app.route('/user', methods=['PO***REMOVED***T'])
 def create_user():
     user = json.loads(request.data)
@@ -62,12 +69,21 @@ def create_user():
 
 @app.route('/ingredient', methods=['GET'])
 def get_ingredients():
-    ingredients = list(db.ingredient.find())
+    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    print(user_id)
+
+    ingredients = list(db.ingredient.find({"user_id": user_id}))
     for ingredient in ingredients:
         ingredient['_id'] = str(ingredient['_id'])
         ingredient['user_id'] = str(ingredient['user_id'])
 
     return jsonify(ingredients)
+
+
+@app.route('/recipe', methods=['PO***REMOVED***T'])
+def create_recipe():
+    recipe = json.loads(request.data)
+    db.insert_one()
 
 
 
