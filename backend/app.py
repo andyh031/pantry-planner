@@ -201,6 +201,9 @@ def updateCalories():
     result = db.user.update_one({"_id": user_id}, {"$set": {"calorie_limit": new_calories}})
     return Response(status=200)
 
+
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
