@@ -1,8 +1,16 @@
 import React from "react";
+import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+
+import { userApi } from "../api/userApi";
 
 function LoginPage() {
   const { user, isAuthenticated, isLoading } = useAuth0();
+  useEffect(() => {
+    if (isAuthenticated) {
+      userApi.createUser(user);
+    }
+  }, [isAuthenticated]);
 
   return (
     <div>

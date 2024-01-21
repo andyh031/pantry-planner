@@ -1,22 +1,26 @@
 from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ***REMOVED***erverApi
+from bson import ObjectId
 import json
 import requests
 import os
 
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, Response, jsonify
 from flask_cors import COR***REMOVED***
 app = Flask(__name__)
 COR***REMOVED***(app)
 
-
+uri = os.environ['MONGO_URI']
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=***REMOVED***erverApi('1'))
 
-db = client.sample_mflix
+db = client.nwHacks2024
 
-data = db.movies.find().limit(3)
+data = db.user.find()
+for record in data:
+    print(record)
+
 
 @app.route('/<name>', methods=['GET'])
 def hello_world(name):
@@ -36,11 +40,37 @@ def get_item(item):
     else:
         print("Error:", response.status_code, response.text)
 
-@app.route('/movie/', methods=['PO***REMOVED***T'])
-def post_project():
-    post_data = json.loads(request.data)
-    db.movies.insert_one(post_data)
-    return "done"
+# @app.route('/movie', methods=['PO***REMOVED***T'])
+# def post_project():
+#     post_data = json.loads(request.data)
+#     db.movies.insert_one(post_data)
+#     return
+
+
+@app.route('/user', methods=['PO***REMOVED***T'])
+def create_user():
+    user = json.loads(request.data)
+    user_id = user["sub"]
+    existing_user = db.user.find({"sub": user_id})
+    if existing_user is None:
+        return Response(status=404)
+    else:
+        print("adding user")
+        db.user.insert_one(user)
+        return Response(status=200)
+
+
+@app.route('/ingredient', methods=['GET'])
+def get_ingredients():
+    ingredients = list(db.ingredient.find())
+    for ingredient in ingredients:
+        ingredient['_id'] = str(ingredient['_id'])
+        ingredient['user_id'] = str(ingredient['user_id'])
+
+    return jsonify(ingredients)
+
+
+
 
 if __name__ == "__main__":
     app.debug = True
