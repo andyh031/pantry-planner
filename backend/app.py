@@ -20,14 +20,9 @@ client = MongoClient(uri, server_api=***REMOVED***erverApi('1'))
 
 db = client.nwHacks2024
 
-data = db.user.find()
-for record in data:
-    print(record)
-
-
-@app.route('/<name>', methods=['GET'])
-def hello_world(name):
-    return f'<h1>Hello, {name}! :D<h1>'
+# @app.route('/<name>', methods=['GET'])
+# def hello_world(name):
+#     return f'<h1>Hello, {name}! :D<h1>'
 
 
 @app.route('/projects')
@@ -102,19 +97,14 @@ def add_ingredient():
         db.ingredient.insert_one(ingredient)
         return Response(status=200)
 
-@app.route("/recipe", methods=['PO***REMOVED***T'])
+
+@app.route("/recipe", methods=['GET'])
 def get_recipes():
-    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
-    recipes = list(db.recipe.find({'user_id': user_id}))
-    if recipes is None:
-        recipes = list(db.recipe.find())
-        for recipe in recipes:
-            recipe['_id'] = str(recipe['_id'])
-            recipe['user_id'] = str(recipe['user_id'])
-    else:
-        for recipe in recipes:
-            recipe['_id'] = str(recipe['_id'])
-            recipe['user_id'] = str(recipe['user_id'])
+    recipes = list(db.recipe.find())
+    for recipe in recipes:
+        recipe['_id'] = str(recipe['_id'])
+        recipe['user_id'] = str(recipe['user_id'])
+
     return jsonify(recipes)
     
 
