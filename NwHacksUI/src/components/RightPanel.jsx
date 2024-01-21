@@ -2,8 +2,8 @@ import { Box, Text, Flex, HStack, Avatar, Input, List, ListItem, CloseButton, Bu
 import { useState } from "react"
 
 
-function RightPanel() {
-    const name = "Ben Dover"
+function RightPanel({user}) {
+    const name = user.name
     const months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"]
     let date = new Date()
     let day = date.getDate()
@@ -21,7 +21,7 @@ function RightPanel() {
         <>
         <Box bgColor='white'>
             <HStack p='2rem' paddingInline='3rem'>
-                <Avatar marginBlock='auto' marginInline='2rem' size='md' name='Ben Dover' bg='teal.200'/>
+                <Avatar marginBlock='auto' marginInline='2rem' size='md' name={name} bg='teal.200'/>
                 <Box>
                     <Text>{name}</Text>
                     <Button onClick={signOut}>Sign out</Button>

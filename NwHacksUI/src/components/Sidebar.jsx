@@ -2,8 +2,9 @@ import { Image, Box, Button, Text, List, Checkbox, ListItem, Flex, useDisclosure
 import { AddIcon, CloseIcon } from '@chakra-ui/icons'
 import React, { useState } from 'react'
 import logoImage from './logo.png'
+import { ingredientsApi } from '../api/IngredientApi'
 
-function Sidebar() {
+function Sidebar({user}) {
 
     const [items, setItems] = useState([{ingredientName: 'Banana', expiryDate: '2024-08-08'}])
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -64,7 +65,7 @@ function Sidebar() {
                 calories: 123,
                 user_id: "USER_ID"
             }
-            
+            ingredientsApi.addIngredient(user, object);
             setItems((prevItems) => {
                 return [...prevItems, {ingredientName, expiryDate}]
             })
