@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { userApi } from "../api/userApi";
+import { userApi } from "../api/UserApi";
 
 function LoginPage() {
   const { user, isAuthenticated, isLoading } = useAuth0();
