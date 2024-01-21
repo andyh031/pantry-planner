@@ -2,6 +2,7 @@ import { Box, Text, Flex, HStack, Avatar, Input, List, ListItem, Button} from "@
 import { useEffect, useState } from "react"
 import { userApi } from "../api/UserApi"
 import { CloseIcon } from "@chakra-ui/icons"
+import { useNavigate } from "react-router-dom"
 
 
 function RightPanel({user, eatenMeals, setEatenMeals, totalCalories, setTotalCalories}) {
@@ -13,9 +14,12 @@ function RightPanel({user, eatenMeals, setEatenMeals, totalCalories, setTotalCal
     let month = date.getMonth()
 
     const [calorieLimit, setCalorieLimit] = useState();
+    const navigate = useNavigate();
 
     const signOut = () => {
         console.log("Signing Out");
+        
+        navigate("/login");
     }
 
     const deleteItem = (meal) => {
