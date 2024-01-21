@@ -106,13 +106,13 @@ def add_ingredient():
 def get_five_ingredients(query):
     api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(query)
     response = requests.get(api_url, headers={'X-Api-Key': os.environ['API_KEY']})
-
     if response.status_code == requests.codes.ok:
         ingredient_data = response.json()
         ingredients = ingredient_data[:5]
         return ingredients
     else:
         print("didn't work")
+
 
 @app.route('/', methods=['GET'])
 def get_ingredient(query):
@@ -121,6 +121,38 @@ def get_ingredient(query):
         ingredient['_id'] = str(ingredient['_id'])
         ingredient['user_id'] = str(ingredient['user_id'])
     return jsonify(ingredients)
+
+
+# returns a list of recipes that contains only the given ingredients
+@app.route("/recipe/contains-ingredients", methods=['PO***REMOVED***T'])
+def findRecipesGivenIngredient():
+    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    print(user_id)
+    ingredients = json.loads(request.data)
+    query = {
+        "$and": [
+            {
+                'ingredients': {
+                    '$all': ingredients,
+                    '$size': len(ingredients)
+                }
+            },
+            {
+                'user_id': user_id
+            }
+        ]
+    }
+    recipes = list(db.recipe.find(query))
+    for recipe in recipes:
+        recipe['_id'] = str(recipe['_id'])
+        recipe['user_id'] = str(recipe['user_id'])
+
+    return jsonify(recipes)
+
+
+
+
+
 
 if __name__ == "__main__":
     app.debug = True
