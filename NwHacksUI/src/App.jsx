@@ -5,7 +5,6 @@ import './App.css'
 
 import Home from './components/Home'
 import LoginPage from './components/LoginPage'
-import PrivateRoute from './auth/PrivateRoute';
 
 function App() {
 
@@ -15,7 +14,7 @@ function App() {
       <ChakraProvider>
         <Routes>
           <Route path='/login' element={<LoginPage />}/>
-          <Route path='/' element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path='/' element={<Home />}/>
           <Route path="*" element={<Navigate to="/" />}/>
         </Routes>
       </ChakraProvider>
