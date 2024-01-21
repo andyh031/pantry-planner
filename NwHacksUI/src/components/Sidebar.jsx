@@ -128,8 +128,8 @@ function Sidebar({user, checkedItems, setCheckedItems, recipes, setRecipes}) {
                         <Text fontSize='30px' fontWeight='bold'>My Pantry</Text>
                         <Text fontSize='12px'>INGREDIENTS: {items.length}</Text>
                     </Box>
-                    <Button onClick={onOpen} width='fit-content' marginBlock='auto' objectFit='cover' size='md' borderRadius='100%' colorScheme='green'>
-                        <AddIcon/>
+                    <Button onClick={onOpen} width='fit-content' marginBlock='auto' w='75px' h='75px' borderRadius='100%' colorScheme='green'>
+                        <AddIcon boxSize='35px'/>
                     </Button>
                     <Modal size='4xl' isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
@@ -253,8 +253,8 @@ function Sidebar({user, checkedItems, setCheckedItems, recipes, setRecipes}) {
                             <ListItem key={item.name}>
                                 <Flex justifyContent='space-between'>
                                     <Checkbox onChange={() => handleCheck(item.name)}size='lg' borderColor='#B7D0B0' colorScheme='green'>
-                                        <Text fontSize='15px'>{item.name}</Text>
-                                        <Text fontSize='12px'>Expires {item.expiration_date}</Text>
+                                        <Text fontSize='15px' >{item.name}</Text>
+                                        <Text fontSize='12px' fontWeight='50'>Expires {item.expiration_date}</Text>
                                     </Checkbox>
                                     <Button size='sm' onClick={() => deleteItem(item.name)}>
                                         <CloseIcon/>
@@ -266,7 +266,7 @@ function Sidebar({user, checkedItems, setCheckedItems, recipes, setRecipes}) {
                 </List>
             </Box>
         </Box>
-        <Button onClick={generateRecipes} colorScheme='green' marginInline='4rem' transform='translate(0, -150px)'>
+        <Button onClick={generateRecipes} colorScheme='green' marginInline='4rem' transform='translate(40px, -150px)'>
             Generate Recipes
         </Button>
         </>

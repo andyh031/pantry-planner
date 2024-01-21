@@ -76,7 +76,7 @@ function Main({user, recipes, setRecipes, setEatenMeals, setTotalCalories}) {
                                 <AccordionPanel borderRadius='10px' m='1rem' bgColor='#D8DED7'>
                                     <Grid gridGap='1rem' templateColumns='1fr 1fr'>
                                         <Box p='1rem' bgColor='#F4F4F4'>
-                                            <Text fontSize='18px'>Ingredients</Text>
+                                            <Text fontSize='18px' fontWeight='semibold'>Ingredients</Text>
                                             <UnorderedList>
                                                 {recipe.ingredients.map((ingredient) => {
                                                     return (
@@ -86,7 +86,7 @@ function Main({user, recipes, setRecipes, setEatenMeals, setTotalCalories}) {
                                             </UnorderedList>
                                         </Box>
                                         <Box p='1rem' bgColor='#F4F4F4'>
-                                            <Text fontSize='18px'>Steps</Text>
+                                            <Text fontSize='18px' fontWeight='semibold'>Steps</Text>
                                             <OrderedList>
                                                 {recipe.steps.map((step) => {
                                                     return (

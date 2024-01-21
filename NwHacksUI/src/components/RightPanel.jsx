@@ -57,7 +57,7 @@ function RightPanel({user, eatenMeals, setEatenMeals, totalCalories, setTotalCal
                 </HStack>
                 <HStack mt='1rem'>
                     <Text>Total Calories: </Text>
-                    <Text marginInline='2rem'>{totalCalories}</Text>
+                    {totalCalories > calorieLimit ? <Text marginInline='2rem' color='red'>{totalCalories}</Text> : <Text marginInline='2rem'>{totalCalories}</Text>}
                 </HStack>
                 <List p='1rem' border='1px solid #E8F5E4' borderRadius='1rem' marginBlock='2rem' spacing='10px'>
                     {eatenMeals?.map((meal) => {
