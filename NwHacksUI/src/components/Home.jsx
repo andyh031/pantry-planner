@@ -2,10 +2,10 @@ import { Box, Grid, GridItem, Flex, Image } from "@chakra-ui/react"
 import Sidebar from "./Sidebar"
 import Main from "./Main"
 import RightPanel from "./RightPanel"
-import bgImage from './food_background_banner.png'
+import bgImage from '../images/food_background_banner.png'
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react"
-import logo from './logo.png'
+import logo from '../images/logo.png'
 
 function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -17,7 +17,7 @@ function Home() {
   if (isLoading) {
     return (
       <Flex w='100vw' h='100vh' justifyContent='center' alignItems='center'>
-        <Image src={logo} w='250px' h='200px' alt='homepage image'/>
+        <Image src={logo} w='300px' h='200px' alt='homepage image'/>
       </Flex>
     )
   } else {

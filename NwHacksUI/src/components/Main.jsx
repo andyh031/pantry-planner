@@ -56,7 +56,7 @@ function Main({user, recipes, setRecipes, setEatenMeals, setTotalCalories}) {
             <Box mt='5rem'>
                 <Text fontSize='36px'>Showing <strong>{recipes.length}</strong> Results</Text>
                 <Text fontSize='14px'>We prioritized ingredients that are about to expire.</Text>
-                <Accordion paddingBlock='1rem' allowToggle>
+                <Accordion maxHeight='600px' overflowY='auto' paddingBlock='2rem' allowToggle>
                     {recipes.map((recipe) => {
                         return (
                             <AccordionItem key={recipe.name}>

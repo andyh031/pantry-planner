@@ -1,7 +1,7 @@
 import { Image, Box, Button, Text, List, Checkbox, ListItem, Flex, useDisclosure, ModalContent, ModalOverlay, Modal,  ModalCloseButton, ModalBody, HStack, Select, Input, ModalFooter, VStack, FormControl, FormLabel, Textarea, Badge, CloseButton, GridItem, Grid} from '@chakra-ui/react'
 import { AddIcon, CloseIcon } from '@chakra-ui/icons'
 import React, { useEffect, useState } from 'react'
-import logoImage from './logo.png'
+import logoImage from '../images/logo.png'
 import { ingredientsApi } from '../api/IngredientApi'
 import { recipeApi } from '../api/RecipeApi'
 
