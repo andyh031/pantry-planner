@@ -67,8 +67,21 @@ def create_user():
 @app.route('/ingredient', methods=['GET'])
 def get_ingredients():
     user_id = getUserIdFromUserSub(request.args.get('user_id'))
+    ingredients = list(db.ingredient.aggregate(
+        [
+            {
+                "$match": {
+                    "user_id": user_id
+                }
+            },
+            {
+                "$sort": {
+                    "expiration_date": 1
+                }
+            }
+        ]
+    ))
 
-    ingredients = list(db.ingredient.find({"user_id": user_id}))
     for ingredient in ingredients:
         ingredient['_id'] = str(ingredient['_id'])
         ingredient['user_id'] = str(ingredient['user_id'])
