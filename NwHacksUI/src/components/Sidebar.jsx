@@ -1,15 +1,15 @@
 import { Image, Box, Button, Text, List, Checkbox, ListItem, Flex, useDisclosure, ModalContent, ModalOverlay, Modal, ModalHeader, ModalCloseButton, ModalBody, HStack, Select, Input, ModalFooter, VStack, FormControl, FormLabel, Textarea, Badge, CloseButton, GridItem, Grid} from '@chakra-ui/react'
 import { AddIcon, CloseIcon } from '@chakra-ui/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import logoImage from './logo.png'
 import { ingredientsApi } from '../api/IngredientApi'
+import { recipeApi } from '../api/RecipeApi'
 
-function Sidebar({user}) {
+function Sidebar({user, checkedItems, setCheckedItems, recipes, setRecipes}) {
 
     const [items, setItems] = useState([{ingredientName: 'Banana', expiryDate: '2024-08-08'}])
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [newAddition, setNewAddition] = useState('Ingredient')
-    const [checkedItems, setCheckedItems] = useState([])
 
     // for ingredient addition
     const [ingredientName, setIngredientName] = useState("");
@@ -24,11 +24,20 @@ function Sidebar({user}) {
     const [steps, setSteps] = useState([])
     const [ingredients, setIngredients] = useState([]);
 
+    const generateRecipes = () => {
+        recipeApi.findRecipeGivenIngredients(checkedItems).
+        then((res) => {
+            console.log("generated recipes from checked items")
+            setRecipes(res.data);
+        });
+    }
+
     const deleteItem = (name) => {
         console.log(name);
         setItems((prevItems) => {
             return prevItems.filter((item) => item.ingredientName !== name)
         })
+        ingredientsApi.deleteIngredient(user, name).then(() => fetchItems());
     }
 
     const addIngredientToRecipe = () => {
@@ -63,12 +72,13 @@ function Sidebar({user}) {
                 name: ingredientName,
                 expiration_date: expiryDate,
                 calories: 123,
-                user_id: "USER_ID"
             }
-            ingredientsApi.addIngredient(user, object);
             setItems((prevItems) => {
                 return [...prevItems, {ingredientName, expiryDate}]
             })
+            ingredientsApi.addIngredient(user, object).then(() => {
+                fetchItems()
+            });
             
         } else {
             object = {
@@ -76,9 +86,9 @@ function Sidebar({user}) {
                 ingredients,
                 description,
                 steps,
-                calories,
-                user_id: "USER_ID"
+                calories
             }
+            recipeApi.createRecipe(user, object);
         }
         console.log(object)
         onClose()
@@ -94,8 +104,17 @@ function Sidebar({user}) {
                 return [...prevItems, item];
             }
         })
-        console.log(checkedItems);
     }
+    
+    async function fetchItems() {
+        ingredientsApi.getIngredients(user).then((res) => {
+            setItems(res.data)
+        })
+    }
+
+    useEffect(() => {
+        fetchItems()
+    }, [])
 
     return (
         <>
@@ -231,13 +250,13 @@ function Sidebar({user}) {
                 <List>
                     {items.map((item) => {
                         return (
-                            <ListItem key={item.ingredientName}>
+                            <ListItem key={item.name}>
                                 <Flex justifyContent='space-between'>
-                                    <Checkbox onChange={() => handleCheck(item.ingredientName)}size='lg' borderColor='#B7D0B0' colorScheme='green'>
-                                        <Text fontSize='15px'>{item.ingredientName}</Text>
-                                        <Text fontSize='12px'>Expires {item.expiryDate}</Text>
+                                    <Checkbox onChange={() => handleCheck(item.name)}size='lg' borderColor='#B7D0B0' colorScheme='green'>
+                                        <Text fontSize='15px'>{item.name}</Text>
+                                        <Text fontSize='12px'>Expires {item.expiration_date}</Text>
                                     </Checkbox>
-                                    <Button size='sm' onClick={() => deleteItem(item.ingredientName)}>
+                                    <Button size='sm' onClick={() => deleteItem(item.name)}>
                                         <CloseIcon/>
                                     </Button>
                                 </Flex>
@@ -247,7 +266,7 @@ function Sidebar({user}) {
                 </List>
             </Box>
         </Box>
-        <Button m='3rem' transform='translate(0, -150px)'>
+        <Button onClick={generateRecipes} colorScheme='green' marginInline='4rem' transform='translate(0, -150px)'>
             Generate Recipes
         </Button>
         </>

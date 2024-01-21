@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Text } from "@chakra-ui/react"
+import { Box, Grid, GridItem, Text, Flex, Image } from "@chakra-ui/react"
 import Sidebar from "./Sidebar"
 import Main from "./Main"
 import RightPanel from "./RightPanel"
@@ -9,49 +9,33 @@ import { useState } from "react"
 import { useEffect } from "react"
 import { userApi } from "../api/UserApi";
 import { ingredientsApi } from "../api/IngredientApi"
+import logo from './logo.png'
 
 function Home() {
-
+  const [recipes, setRecipes] = useState([]);
+  const [checkedItems, setCheckedItems] = useState([]);
+  const [eatenMeals, setEatenMeals] = useState([]);
+  const [totalCalories, setTotalCalories] = useState(0);
   const { user, isAuthenticated, isLoading } = useAuth0();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // Check if user is authenticated before making the API call
-      if (isAuthenticated) {
-        // You can now use the 'user' object for your API call
-        try {
-          // Make your API call using 'user'
-          // debugger;
-          // let response = await ingredientsApi.getIngredients(user);
-          // setIngredients(response.data);
-          // console.log(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
-    };
-
-    fetchData(); // Trigger the API call when the component mounts or 'user' changes
-  }, [isLoading]);
 
   if (isLoading) {
     return (
-      <div>
-        LOADING
-      </div>
+      <Flex w='100vw' h='100vh' justifyContent='center' alignItems='center'>
+        <Image src={logo} w='250px' h='200px' alt='homepage image'/>
+      </Flex>
     )
   } else {
       return (
         <Box h='100vh' backgroundColor='#F4F4F4' backgroundImage={bgImage} backgroundRepeat='repeat-x' backgroundSize='1547px 300px' backgroundPosition='initial'>
         <Grid gridGap='3rem' templateColumns='0.8fr 2fr 1fr' p='2rem'>
           <GridItem>
-            <Sidebar user={user}/>
+            <Sidebar user={user} checkedItems={checkedItems} setCheckedItems={setCheckedItems} recipes={recipes} setRecipes={setRecipes} />
           </GridItem>
           <GridItem>
-            <Main user={user}/>
+            <Main user={user} recipes={recipes} setRecipes={setRecipes} setEatenMeals={setEatenMeals} setTotalCalories={setTotalCalories}/>
           </GridItem>
-          <GridItem bgColor='white'>
-            <RightPanel user={user}/>
+          <GridItem bgColor='white' borderRadius='1rem'>
+            <RightPanel user={user} eatenMeals={eatenMeals} setEatenMeals={setEatenMeals} totalCalories={totalCalories} setTotalCalories={setTotalCalories}/>
           </GridItem>
         </Grid>
       </Box>

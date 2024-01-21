@@ -5,6 +5,7 @@ from bson import ObjectId
 import json
 import requests
 import os
+import re
 
 from flask import Flask, render_template, request, url_for, redirect, Response, jsonify
 from flask_cors import CORS
@@ -131,11 +132,13 @@ def get_ingredient(ingredient):
 def findRecipesGivenIngredient():
     ingredients = json.loads(request.data)
     query = {
-                'ingredients': {
-                    '$all': ingredients,
-                    '$size': len(ingredients)
-                }
-    }
+        "$expr": {
+            "$gte": [{ "$size": "$ingredients" }, len(ingredients)]
+      },
+      'ingredients': {
+            '$all': ingredients
+      }
+}
     recipes = list(db.recipe.find(query))
     for recipe in recipes:
         recipe['_id'] = str(recipe['_id'])
@@ -143,10 +146,47 @@ def findRecipesGivenIngredient():
 
     return jsonify(recipes)
 
+@app.route("/ingredient", methods=["DELETE"])
+def removeIngredient():
+    user_id = getUserIdFromUserSub(request.args.get('user_id'))
+    item = request.args.get('item')
+    query = {
+        "$and": [
+            {"user_id": user_id},
+            {"name": item}
+        ]
+    }
+    result = db.ingredient.delete_one(query)
+    print(result)
+    return Response(status=200)
 
 
+@app.route("/recipe/search", methods=["GET"])
+def search():
+    search_string = request.args.get('search_string')
+    regex_pattern = re.compile(f'.*{search_string}.*', re.IGNORECASE)
+
+    result = list(db.recipe.find({"name": {"$regex": regex_pattern}}))
+    for recipe in result:
+        recipe["_id"] = str(recipe["_id"])
+        recipe['user_id'] = str(recipe['user_id'])
+        print(result)
+
+    return jsonify(result)
 
 
+@app.route('/user/calorie_limit', methods=["GET"])
+def getCalories():
+    user_id = getUserIdFromUserSub(request.args.get('user_id'))
+    result = db.user.find_one({"_id": user_id})
+    return str(result["calorie_limit"])
+
+@app.route('/user/calorie_limit', methods=["PUT"])
+def updateCalories():
+    user_id = getUserIdFromUserSub(request.args.get('user_id'))
+    new_calories = request.args.get('calories')
+    result = db.user.update_one({"_id": user_id}, {"$set": {"calorie_limit": new_calories}})
+    return Response(status=200)
 
 if __name__ == "__main__":
     app.debug = True
