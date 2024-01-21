@@ -54,7 +54,6 @@ def getUserIdFromUser***REMOVED***ub(sub):
     user_obj_id = db.user.find_one({"sub": sub})
     return user_obj_id['_id']
 
-
 @app.route('/user', methods=['PO***REMOVED***T'])
 def create_user():
     user = json.loads(request.data)
@@ -72,36 +71,38 @@ def create_user():
 def get_ingredients():
     user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
 
-    ingredients = list(db.ingredient.find({"user_id": user_id}))
+    ingredients = list(get_item({"name": ''}))
     for ingredient in ingredients:
         ingredient['_id'] = str(ingredient['_id'])
         ingredient['user_id'] = str(ingredient['user_id'])
 
     return jsonify(ingredients)
 
+def get_five_ingredients(query):
+    api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(query)
+    response = requests.get(api_url, headers={'X-Api-Key': os.environ['API_KEY']})
+
+    if response.status_code == requests.codes.ok:
+        ingredient_data = response.json()
+        ingredients = ingredient_data[:5]
+        return ingredients
+    else:
+        print("didn't work")
+
+@app.route('/', methods=['GET'])
+def get_ingredient(query):
+    ingredients = get_five_ingredients(query)
+    for ingredient in ingredients:
+        ingredient['_id'] = str(ingredient['_id'])
+        ingredient['user_id'] = str(ingredient['user_id'])
+    return jsonify(ingredients)
+        
 
 @app.route('/recipe', methods=['PO***REMOVED***T'])
 def create_recipe():
     user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
-    recipe = request.data
-    recipe = json.loads(recipe)
-    recipe["user_id"] = user_id
-    db.recipe.insert_one(recipe)
-    return Response(status=200)
-
-
-@app.route("/ingredient", methods=['PO***REMOVED***T'])
-def add_ingredient():
-    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
-    ingredient = json.loads(request.data)
-    existing_user = db.user.find({"sub": user_id})
-    if existing_user is None:
-        return Response(status=404)
-    else:
-        ingredient["user_id"] = user_id
-        db.ingredient.insert_one(ingredient)
-        return Response(status=200)
-
+    recipe = json.loads(request.data)
+    db.insert_one()
 
 
 
