@@ -82,8 +82,11 @@ def get_ingredients():
 @app.route('/recipe', methods=['PO***REMOVED***T'])
 def create_recipe():
     user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
-    recipe = json.loads(request.data)
-    db.insert_one()
+    recipe = request.data
+    recipe = json.loads(recipe)
+    recipe["user_id"] = user_id
+    db.recipe.insert_one(recipe)
+    return Response(status=200)
 
 
 
