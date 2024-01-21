@@ -54,6 +54,7 @@ def getUserIdFromUser***REMOVED***ub(sub):
     user_obj_id = db.user.find_one({"sub": sub})
     return user_obj_id['_id']
 
+
 @app.route('/user', methods=['PO***REMOVED***T'])
 def create_user():
     user = json.loads(request.data)
@@ -71,12 +72,36 @@ def create_user():
 def get_ingredients():
     user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
 
-    ingredients = list(get_item({"name": ''}))
+    ingredients = list(db.ingredient.find({"user_id": user_id}))
     for ingredient in ingredients:
         ingredient['_id'] = str(ingredient['_id'])
         ingredient['user_id'] = str(ingredient['user_id'])
 
     return jsonify(ingredients)
+
+
+@app.route('/recipe', methods=['PO***REMOVED***T'])
+def create_recipe():
+    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    recipe = request.data
+    recipe = json.loads(recipe)
+    recipe["user_id"] = user_id
+    db.recipe.insert_one(recipe)
+    return Response(status=200)
+
+
+@app.route("/ingredient", methods=['PO***REMOVED***T'])
+def add_ingredient():
+    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
+    ingredient = json.loads(request.data)
+    existing_user = db.user.find({"sub": user_id})
+    if existing_user is None:
+        return Response(status=404)
+    else:
+        ingredient["user_id"] = user_id
+        db.ingredient.insert_one(ingredient)
+        return Response(status=200)
+
 
 def get_five_ingredients(query):
     api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(query)
@@ -96,15 +121,6 @@ def get_ingredient(query):
         ingredient['_id'] = str(ingredient['_id'])
         ingredient['user_id'] = str(ingredient['user_id'])
     return jsonify(ingredients)
-        
-
-@app.route('/recipe', methods=['PO***REMOVED***T'])
-def create_recipe():
-    user_id = getUserIdFromUser***REMOVED***ub(request.args.get('user_id'))
-    recipe = json.loads(request.data)
-    db.insert_one()
-
-
 
 if __name__ == "__main__":
     app.debug = True
