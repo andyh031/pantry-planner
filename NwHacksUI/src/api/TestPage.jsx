@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import UserContext from "../auth/UserContext";
-import { ingredientsApi } from "./ingredientApi";
+import { ingredientsApi } from "./IngredientApi";
 
 
 export default function TestPage() {
